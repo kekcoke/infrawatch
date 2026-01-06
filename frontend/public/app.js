@@ -27,7 +27,8 @@ async function loadInfrastructureStatus() {
         `;
     }
 
-    // Load status on page load & refresh every 30 seconds
-    loadInfrastructureStatus();
-    setInterval(loadInfrastructureStatus, 30000);
 }
+
+// Load status on page load & refresh every 30 seconds
+loadInfrastructureStatus();
+setInterval(loadInfrastructureStatus, 30000);
