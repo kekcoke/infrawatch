@@ -23,7 +23,7 @@ app.get('/health', (req, res) => {
 });
 
 // Infra status endpoints
-app.get('/infra/status', (req, res) => {
+app.get('/api/infra/status', (req, res) => {
     res.json({
         services: [
             { name: 'database', status: 'running', uptime: '99.9%' },
