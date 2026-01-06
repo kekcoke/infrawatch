@@ -31,8 +31,8 @@ app.get('/infra/status', (req, res) => {
             { name: 'message-queue', status: 'degraded', uptime: '95.0%' },  
             { name: 'api-gateway', status: 'running', uptime: '99.8%' },
             { name: 'auth-service', status: 'running', uptime: '99.7%'},
-            { name: 'storage-service', status: 'maintenance', uptime: 'N/A' }
-            { name: 'notification-service', status: 'running', uptime: '99.6%' }
+            { name: 'storage-service', status: 'maintenance', uptime: 'N/A' },
+            { name: 'notification-service', status: 'running', uptime: '99.6%' },
             { name: 'analytics-service', status: 'running', uptime: '99.4%' },
             { name: 'search-service', status: 'running', uptime: '99.3%' },
             { name: 'logging-service', status: 'running', uptime: '99.9%' },
