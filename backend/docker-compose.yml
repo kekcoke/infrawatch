@@ -1,0 +1,17 @@
+# backend/docker-compose.yml
+version: '3.8'
+
+services:
+  backend:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=development
+      - DATABASE_URL=sqlite:///infrawatch.db
+
+    volumes:
+      - .:/app
+    command: python run.py
+
+    # Future services added here
