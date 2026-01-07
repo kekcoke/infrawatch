@@ -60,41 +60,54 @@ def get_clusters():
         'healthy_servers': cluster.healthy_servers,
         'servers': [server.to_dict() for server in cluster.servers]
     })
-
 @metrics_bp.route('/metrics/response-times')
 def get_response_time_metrics():
     """Get response time metrics for monitored services."""
     # Simulate response time metrics
     metrics = Metrics(
+        metric_type='response_time',
         metric_name='response_time',
+        source='api_gateway',
+        window_seconds=60,
         values=[random.uniform(100, 500) for _ in range(10)],
-        timestamps=[(datetime.utcnow() - timedelta(minutes=i)).isoformat() for i in range(10)]
+        timestamps=[
+            (datetime.utcnow() - timedelta(minutes=i)).isoformat() 
+            for i in range(10)
+        ]
     )
 
-    metrics_response_times = metrics.get_response_times()
-
+    response_times = metrics.response_times
+    
     return jsonify({
         'metric_name': metrics.metric_name,
         'values': metrics.values,
         'timestamps': metrics.timestamps,
-        'response_times': metrics_response_times
+        'aggregations': response_times  # Fixed: changed key to 'aggregations' and variable name
     })
+
 
 @metrics_bp.route('/metrics/error-rates')
 def get_error_rate_metrics():
     """Get error rate metrics for monitored services."""
     # Simulate error rate metrics
+    # Fixed: added missing required fields for proper initialization
     metrics = Metrics(
+        metric_type='error_rate',
         metric_name='error_rate',
+        source='api_gateway',
+        window_seconds=60,
         values=[random.uniform(0, 5) for _ in range(10)],
-        timestamps=[(datetime.utcnow() - timedelta(minutes=i)).isoformat() for i in range(10)]
+        timestamps=[
+            (datetime.utcnow() - timedelta(minutes=i)).isoformat() 
+            for i in range(10)
+        ]
     )
 
-    metrics_error_rates = metrics.get_error_rates()
+    error_rates = metrics.error_rates
 
     return jsonify({
         'metric_name': metrics.metric_name,
         'values': metrics.values,
         'timestamps': metrics.timestamps,
-        'error_rates': metrics_error_rates
+        'aggregations': error_rates  # Fixed: changed key to 'aggregations' for consistency
     })

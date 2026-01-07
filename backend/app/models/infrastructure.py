@@ -1,6 +1,6 @@
 # backend/app/models/infrastructure.py
 from datetime import datetime
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 
 @dataclass
@@ -60,11 +60,26 @@ class InfrastructureCluster:
 @dataclass
 class Metrics:
     """Metrics data for collecting and aggregating data over time"""
-    source: Optional[str] = None
     metric_type: Optional[str] = None
-    window_seconds: int
+    metric_name: Optional[str] = None
+    source: Optional[str] = None
+    window_seconds: Optional[int] = None
+    values: List[float] = field(default_factory=list)
+    timestamps: List[str] = field(default_factory=list)
 
-    def get_response_times(self) -> Dict[str, float]:
+    def to_dict(self) -> Dict:
+        """Convert Metrics instance to dictionary; serialize for API responses"""
+        return {
+            "metric_type": self.metric_type,
+            "metric_name": self.metric_name,
+            "source": self.source,
+            "window_seconds": self.window_seconds,
+            "values": self.values,
+            "timestamps": self.timestamps,
+        }
+
+    @property
+    def response_times(self) -> Dict[str, float]:
         """Simulate response time metrics aggregation"""
         # In production, this would query a time-series database
         return {
@@ -74,7 +89,8 @@ class Metrics:
             "average": 150.2,
         }
     
-    def get_error_rates(self) -> Dict[str, float]:
+    @property
+    def error_rates(self) -> Dict[str, float]:
         """Simulate error rate metrics aggregation"""
         # In production, this would query a time-series database
         return {
@@ -92,4 +108,5 @@ class Metrics:
         ) -> None:
         """Record a response time metric"""
         # In production, this would store the metric in a time-series database
-        pass
+        self.values.append(duration_ms)
+        self.timestamps.append(datetime.utcnow().isoformat())

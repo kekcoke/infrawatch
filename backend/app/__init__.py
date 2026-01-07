@@ -3,7 +3,7 @@ from flask import Flask
 from app.core.config import Config
 from app.api.v1 import health_bp, infrastructure_bp, metrics_bp
 from app.core.middleware.request_timer import request_timer
-from backend.app.models.infrastructure import Metrics
+from app.models.infrastructure import Metrics
 
 
 def create_app(config_class=Config):
@@ -11,7 +11,11 @@ def create_app(config_class=Config):
     app.config.from_object(config_class)
 
     # Instantiate infra-level services
-    metrics = Metrics(window_seconds=60)
+    metrics = Metrics(
+        metric_type="infra",
+        metric_name="request_duration_seconds",
+        source="request_timer",
+        window_seconds=60)
 
     # Register middleware
     request_timer(app, metrics)
