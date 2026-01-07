@@ -1,12 +1,13 @@
 # backend/app/api/v1/__init__.py
 from flask import Blueprint, jsonify, request
-from app.models.infrastructure import InfrastructureCluster, Server
+from app.models.infrastructure import InfrastructureCluster, Server, Metrics
 from datetime import datetime, timedelta
 import random
 
 # Implement Blueprints 
 health_bp = Blueprint('health', __name__)
 infrastructure_bp = Blueprint('infrastructure', __name__)
+metrics_bp = Blueprint('metrics', __name__, url_prefix='/metrics')
 
 @health_bp.route('/health')
 def health_check():
@@ -58,4 +59,42 @@ def get_clusters():
         'total_servers': cluster.total_servers,
         'healthy_servers': cluster.healthy_servers,
         'servers': [server.to_dict() for server in cluster.servers]
+    })
+
+@metrics_bp.route('/metrics/response-times')
+def get_response_time_metrics():
+    """Get response time metrics for monitored services."""
+    # Simulate response time metrics
+    metrics = Metrics(
+        metric_name='response_time',
+        values=[random.uniform(100, 500) for _ in range(10)],
+        timestamps=[(datetime.utcnow() - timedelta(minutes=i)).isoformat() for i in range(10)]
+    )
+
+    metrics_response_times = metrics.get_response_times()
+
+    return jsonify({
+        'metric_name': metrics.metric_name,
+        'values': metrics.values,
+        'timestamps': metrics.timestamps,
+        'response_times': metrics_response_times
+    })
+
+@metrics_bp.route('/metrics/error-rates')
+def get_error_rate_metrics():
+    """Get error rate metrics for monitored services."""
+    # Simulate error rate metrics
+    metrics = Metrics(
+        metric_name='error_rate',
+        values=[random.uniform(0, 5) for _ in range(10)],
+        timestamps=[(datetime.utcnow() - timedelta(minutes=i)).isoformat() for i in range(10)]
+    )
+
+    metrics_error_rates = metrics.get_error_rates()
+
+    return jsonify({
+        'metric_name': metrics.metric_name,
+        'values': metrics.values,
+        'timestamps': metrics.timestamps,
+        'error_rates': metrics_error_rates
     })

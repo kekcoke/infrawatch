@@ -56,3 +56,40 @@ class InfrastructureCluster:
     @property
     def total_servers(self) -> int:
         return len(self.servers)
+    
+@dataclass
+class Metrics:
+    """Metrics data for collecting and aggregating data over time"""
+    source: Optional[str] = None
+    metric_type: Optional[str] = None
+    window_seconds: int
+
+    def get_response_times(self) -> Dict[str, float]:
+        """Simulate response time metrics aggregation"""
+        # In production, this would query a time-series database
+        return {
+            "p50": 120.5,
+            "p90": 200.3,
+            "p99": 350.7,
+            "average": 150.2,
+        }
+    
+    def get_error_rates(self) -> Dict[str, float]:
+        """Simulate error rate metrics aggregation"""
+        # In production, this would query a time-series database
+        return {
+            "total_requests": 10000,
+            "error_requests": 150,
+            "error_rate_percentage": 1.5,
+        }
+
+    def record_response_time(
+            self, 
+            path: str, 
+            method: str, 
+            status: int, 
+            duration_ms: float
+        ) -> None:
+        """Record a response time metric"""
+        # In production, this would store the metric in a time-series database
+        pass
