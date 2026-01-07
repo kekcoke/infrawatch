@@ -1,8 +1,28 @@
-# Create a Dockerfile for the backend service
-FROM node:18-alpine
+# backend/Dockerfile
+FROM python:3.11-slim
+
+# Set work directory
 WORKDIR /app
-COPY package*.json ./
-RUN npm install
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements file
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy app source code
 COPY . .
-EXPOSE 3001
-CMD ["npm", "start"]
+
+# Create non-root user and switch to it
+RUN useradd --create-home --shell /bin/bash app
+RUN chown -R app:app /app
+USER app
+
+# Expose port
+EXPOSE 5000
+
+# Production command
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "4", "run:app"]
