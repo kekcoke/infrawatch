@@ -33,8 +33,8 @@ class Server:
 @dataclass
 class InfrastructureCluster:
     """Represents a cluster of servers"""
-    id: str
-    # name: str
+    # id: str
+    name: str
     servers: List[Server]
     # created_at: datetime
     # updated_at: datetime
@@ -42,8 +42,8 @@ class InfrastructureCluster:
     def to_dict(self) -> Dict:
         """Convert InfrastructureCluster instance to dictionary; serialize for API responses"""
         return {
-            "id": self.id,
-            # "name": self.name,
+            # "id": self.id,
+            "name": self.name,
             "servers": [server.to_dict() for server in self.servers],
             # "created_at": self.created_at.isoformat(),
             # "updated_at": self.updated_at.isoformat(),
