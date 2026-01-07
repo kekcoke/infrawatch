@@ -11,10 +11,12 @@ yarn-error.log*
 .env.test.local
 .env.staging.local
 .env.production.local
+.env.*
 
 # Build outputs
 dist/
 build/
+*.egg-info/
 
 # IDE files
 .vscode/
@@ -32,3 +34,15 @@ Thumbs.db
 # Logs
 logs
 *.log
+
+# Python virtual environments
+venv/
+.venv/
+backend/venv/
+
+# Pyenv
+.python-version
+
+# Python cache
+__pycache__/
+*.py[cod]
