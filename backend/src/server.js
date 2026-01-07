@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const getDiskUsage = require('./monitoring/disk');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -40,6 +41,16 @@ app.get('/api/infra/status', (req, res) => {
         ],
         timestamp: new Date().toISOString()
     });
+});
+
+// Disk usage endpoint
+app.get('/api/infra/disk-usage', async (req, res) => {
+  try {
+    const usage = await getDiskUsage();
+    res.json(usage);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to retrieve disk usage', details: err.message });
+  }
 });
 
 // Start server
