@@ -36,6 +36,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onEdit, onDelete }) 
                     />
                 </Box>
             </CardContent>
+            <CardActions>
+                <Button size="small" color="primary" onClick={() => onEdit(product)}>
+                    Edit
+                </Button>
+                <Button size="small" color="secondary" onClick={() => onDelete(product.id)}>
+                    Delete
+                </Button>
+            </CardActions>
         </Card> 
     );
 };
