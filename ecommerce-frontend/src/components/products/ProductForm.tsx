@@ -57,6 +57,63 @@ const ProductForm: React.FC<ProductFormProps> = ({ open, product, onSave, onClos
   };
 
   return (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm"></Dialog>
+    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
+        <DialogTitle>
+            {product ? 'Edit Product' : 'Add Product'}
+        </DialogTitle>
+        <DialogContent>
+            <TextField
+                autoFocus
+                margin='dense'
+                label='Product Name'
+                fullWidth
+                variant='outlined'
+                value={formData.name}
+                onChange={(e) => setFormData({...formData, name: e.target.value})}
+                required
+                sx={{ marginBottom: 2 }}
+            />
+            <TextField
+                margin='dense'
+                label='Price'
+                type='number'
+                fullWidth
+                variant='outlined'
+                value={formData.price}
+                onChange={(e) => setFormData({...formData, price: parseFloat(e.target.value)})}
+                required
+                sx={{ marginBottom: 2 }}
+            />
+            <TextField
+                margin='dense'
+                label='Description'
+                fullWidth
+                variant='outlined'
+                multiline
+                rows={4}
+                value={formData.description}
+                onChange={(e) => setFormData({...formData, description: e.target.value})}
+                required
+                sx={{ marginBottom: 2 }}
+            />
+            <TextField
+                select
+                margin='dense'
+                label='Category'
+                fullWidth
+                variant='outlined'
+                value={formData.category}
+                onChange={(e) => setFormData({...formData, category: e.target.value})}
+                required
+                sx={{ marginBottom: 2 }}
+            >
+                {categories.map((category) => (
+                    <MenuItem key={category} value={category}>
+                        {category}
+                    </MenuItem>
+                ))}
+            </TextField>
+        </DialogContent>
+    </Dialog>
   );
 };
