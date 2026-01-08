@@ -8,3 +8,14 @@ interface ProductCardProps {
     onEdit: (product: Product) => void;
     onDelete: (productId: number) => void;
 }
+
+const ProductCard: React.FC<ProductCardProps> = ({ product, onEdit, onDelete }) => {
+    return (
+        <Card sx={{ maxWidth: 345, margin: 1 }}>
+            <CardContent>
+            </CardContent>
+        </Card> 
+    );
+};
+
+export default ProductCard;
