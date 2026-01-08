@@ -114,6 +114,16 @@ const ProductForm: React.FC<ProductFormProps> = ({ open, product, onSave, onClos
                 ))}
             </TextField>
         </DialogContent>
+        <DialogActions>
+            <Button onClick={onClose} color='secondary'>
+                Cancel
+            </Button>
+            <Button onClick={handleSubmit} color='primary'>
+                {product ? 'Update' : 'Create'}
+            </Button>
+        </DialogActions>
     </Dialog>
   );
 };
+
+export default ProductForm;
