@@ -1,7 +1,15 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
+import axios from 'axios';
+
+jest.mock('axios');
+const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 test('renders dashboard heading after loading finishes', async () => {
+  mockedAxios.get.mockResolvedValue({
+    data: [{ id: 1, name: 'Test Product' }]
+  });
+  
   render(<App />);
 
   // Verify the loader appears first
