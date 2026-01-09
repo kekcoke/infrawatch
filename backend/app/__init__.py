@@ -1,5 +1,6 @@
 # backend/app/__init__.py
 from flask import Flask
+from flask_cors import CORS
 from app.core.config import Config
 from app.api.v1 import health_bp, infrastructure_bp, metrics_bp, products_bp
 from app.core.middleware.request_timer import request_timer
@@ -9,6 +10,9 @@ from app.models.infrastructure import Metrics
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
+
+    # Enable CORS
+    CORS(app)
 
     # Instantiate infra-level services
     metrics = Metrics(
