@@ -12,6 +12,7 @@ import {
   MenuItem,
 } from '@mui/material';
 import { Product, ProductFormData } from '../../types/Product';
+import { categoryService } from '../../services/categoryService';
 
 interface ProductFormProps {
   open: boolean;
@@ -20,18 +21,29 @@ interface ProductFormProps {
   onClose: () => void;
 }
 
-const categories = ['Electronics', 'Books', 'Clothing', 'Home', 'Sports'];
 
 const ProductForm: React.FC<ProductFormProps> = ({ open, product, onSave, onClose }) => {
   const [formData, setFormData] = useState<ProductFormData>({
     name: '',
     price: 0,
     description: '',
-    category: categories[0],
+    category: '',
     inStock: true,
   });
+  const [categories, setCategories] = useState<string[]>([]);
 
   useEffect(() => {
+
+    const fetchCategories = async () => {
+      const fetchedCategories = await categoryService.getAllCategories();
+      setCategories(fetchedCategories.map((cat) => cat.name));
+      if (fetchedCategories.length > 0 && !product) {
+        setFormData((prev) => ({ ...prev, category: fetchedCategories[0].name }));
+      }
+    }
+
+    fetchCategories();
+  
     if (product) {
       setFormData({
         name: product.name,
@@ -45,7 +57,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ open, product, onSave, onClos
         name: '',
         price: 0,
         description: '',
-        category: categories[0],
+        category: '',
         inStock: true,
       });
     }

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Add as AddIcon } from '@mui/icons-material';
 import { Alert, Box, Button, CircularProgress, Container, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import { productService } from '../../services/api';
+import { productService } from '../../services/productService';
 import { Product, ProductFormData } from '../../types/Product';
 import ProductCard from './ProductCard';
 import ProductForm from './ProductForm';
@@ -30,7 +30,7 @@ const ProductList: React.FC = () => {
         // Mock data in the interim
         setProducts([
             {
-                id: 1,
+                id: '1',
                 name: 'Sample Product',
                 price: 29.99,
                 description: 'This is a sample product for development',
@@ -66,7 +66,7 @@ const ProductList: React.FC = () => {
     setShowForm(true);
   };
 
-  const handleDeleteProduct = async (id: number) => {
+  const handleDeleteProduct = async (id: string) => {
     try {
       await productService.deleteProduct(id);
       await loadProducts();

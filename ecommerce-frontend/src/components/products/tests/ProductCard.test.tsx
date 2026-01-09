@@ -5,7 +5,7 @@ import ProductCard from '../ProductCard';
 import { Product } from '../../../types/Product';
 
 const mockProduct: Product = {
-  id: 1,
+  id: '1',
   name: 'Test Product',
   price: 29.99,
   description: 'Test description',
