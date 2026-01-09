@@ -2,9 +2,9 @@ from flask import Blueprint, jsonify
 from app.models import Product
 from datetime import datetime
 
-products_bp = Blueprint('products', __name__)
+products_bp = Blueprint('products', __name__, url_prefix='/products')
 
-@products_bp.route('/products', methods=['GET'])
+@products_bp.route('', methods=['GET'])
 def get_products():
     """Get a list of products - simulated data for demonstration."""
     # Simulate product data; in prod this would query a database
@@ -25,7 +25,7 @@ def get_products():
         'timestamp': datetime.utcnow().isoformat()
     })
 
-@products_bp.route('/products/<product_id>', methods=['GET'])
+@products_bp.route('/<product_id>', methods=['GET'])
 def get_product(product_id):
     """Get details of a specific product by ID - simulated data for demonstration."""
     # Simulate fetching a single product; in prod this would query a database
@@ -43,7 +43,7 @@ def get_product(product_id):
         'timestamp': datetime.utcnow().isoformat()
     })
 
-@products_bp.route('/products', methods=['POST'])
+@products_bp.route('', methods=['POST'])
 def create_product():
     """Create a new product - simulated action for demonstration."""
     # In prod, you would extract data from request and save to a database
@@ -62,7 +62,7 @@ def create_product():
         'timestamp': datetime.utcnow().isoformat()
     }), 201
 
-@products_bp.route('/products/<product_id>', methods=['PUT'])
+@products_bp.route('/<product_id>', methods=['PUT'])
 def update_product(product_id):
     """Update an existing product - simulated action for demonstration."""
     # In prod, you would extract data from request and update in a database
@@ -81,7 +81,7 @@ def update_product(product_id):
         'timestamp': datetime.utcnow().isoformat()
     })
 
-@products_bp.route('/products/<product_id>', methods=['DELETE'])
+@products_bp.route('/<product_id>', methods=['DELETE'])
 def delete_product(product_id):
     """Delete a product - simulated action for demonstration."""
     # In prod, you would delete the product from a database

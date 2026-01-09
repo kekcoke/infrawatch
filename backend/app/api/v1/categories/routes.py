@@ -10,10 +10,7 @@ def get_categories():
     """Endpoint to retrieve all product categories."""
     service = CategoriesService()
     categories = service.get_all_categories()
-    return jsonify({
-        'categories': [category.__dict__ for category in categories],
-        'total_count': len(categories)
-    })
+    return jsonify([category.__dict__ for category in categories])
 
 @categories_bp.route('/<category_id>', methods=['GET'])
 def get_category(category_id):
