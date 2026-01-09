@@ -12,6 +12,8 @@ services:
       - backend
     networks:
       - app-network
+    environment:
+      - NODE_ENV=development
 
   backend:
     build: ../backend
@@ -19,6 +21,10 @@ services:
       - "5000:5000"
     networks:
       - app-network
+    environment:
+      - FLASK_ENV=development
+      - FLASK_APP=app
+      - CORS_ALLOWED_ORIGINS=http://localhost:3000
 
 networks:
   app-network:

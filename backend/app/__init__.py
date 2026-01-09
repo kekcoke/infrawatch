@@ -17,8 +17,9 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
-    # Enable CORS
-    CORS(app)
+    # Development CORS (allow all)
+    if app.config.get('ENV') == 'development':
+        CORS(app)
 
     # Instantiate infra-level services
     metrics = Metrics(
