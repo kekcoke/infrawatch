@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from app.models import Product
+from app.models.product import Product
 from datetime import datetime
 
 products_bp = Blueprint('products', __name__, url_prefix='/products')
