@@ -12,7 +12,7 @@ class Product:
     name: str
     price: float
     description: str
-    category: str
+    category: int
     stock_quantity: int = 0
     created_at: datetime = field(default_factory=utc_now)
     updated_at: datetime = field(default_factory=utc_now)
