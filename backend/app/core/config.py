@@ -7,6 +7,8 @@ class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY' or 'dev-secret-key-change-me-in-production')
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL' or 'sqlite:///infrawatch.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    FLASK_ENV = os.getenv('FLASK_ENV', 'production')
+    DEBUG = os.getenv('FLASK_DEBUG', '0') == '1'
 
     # Production-performance settings
     SQLALCHEMY_ENGINE_OPTIONS = {
@@ -21,10 +23,12 @@ class Config:
 class DevelopmentConfig(Config):
     """Development configuration with debug settings"""
     DEBUG = True
+    FLASK_ENV = 'development'
 
 class ProductionConfig(Config):
     """Production configuration with enhanced security"""
     DEBUG = False
+    FLASK_ENV = 'production'
     # SESSION_COOKIE_SECURE = True
     # REMEMBER_COOKIE_SECURE = True
     # PERMANENT_SESSION_LIFETIME = timedelta(minutes=30)
@@ -32,4 +36,13 @@ class ProductionConfig(Config):
 class TestingConfig(Config):
     """Testing configuration with in-memory database"""
     TESTING = True
+    DEBUG = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
+
+# Configuration dictionary
+config = {
+    'development': DevelopmentConfig,
+    'production': ProductionConfig,
+    'testing': TestingConfig,
+    'default': DevelopmentConfig
+}

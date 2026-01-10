@@ -1,6 +1,9 @@
 # backend/app/models/category.py
-from datetime import datetime
+from datetime import datetime, timezone
 from dataclasses import dataclass, field
+
+def utc_now():
+    return datetime.now(timezone.utc)
 
 @dataclass
 class Category:
@@ -8,5 +11,5 @@ class Category:
     id: str
     name: str
     description: str
-    created_at: datetime
-    updated_at: datetime = field(default_factory=datetime.utcnow)
+    created_at: datetime = field(default_factory=utc_now)
+    updated_at: datetime = field(default_factory=utc_now)
